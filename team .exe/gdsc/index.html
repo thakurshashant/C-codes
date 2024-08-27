@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Canvas Grid</title>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="2000" height="1000"></canvas>
+    <br>
+    <button onclick="openColorPicker()">Change Color</button>
+
+    <script>
+        var canvas = document.getElementById('myCanvas');
+        var context = canvas.getContext('2d');
+        var selectedColor = "yellow"; // Default color
+
+        // Draw grid
+        var boxSize = 50;
+        for (var x = 0; x < canvas.width; x += boxSize) {
+            for (var y = 0; y < canvas.height; y += boxSize) {
+                context.strokeRect(x, y, boxSize, boxSize);
+            }
+        }
+
+        // Change color on click
+        canvas.addEventListener('click', function (event) {
+            var x = event.pageX - canvas.offsetLeft;
+            var y = event.pageY - canvas.offsetTop;
+            var column = Math.floor(x / boxSize);
+            var row = Math.floor(y / boxSize);
+            context.fillStyle = selectedColor;
+            context.fillRect(column * boxSize, row * boxSize, boxSize, boxSize);
+        });
+
+        // Open color picker dialog
+        function openColorPicker() {
+            var input = document.createElement("input");
+            input.type = "color";
+            input.addEventListener("change", function () {
+                selectedColor = input.value;
+            });
+            input.click();
+        }
+    </script>
+</body>
+
+</html>
